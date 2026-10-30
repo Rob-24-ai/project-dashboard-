@@ -1,0 +1,17 @@
+{
+  "name": "tower-dashboard",
+  "version": "1.0.0",
+  "description": "Floating macOS dashboard for your Claude and Codex sessions, grouped by project",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "setup": "npm --prefix window ci && node -e \"require('./window/node_modules/electron')\"",
+    "start": "node scripts/start.js",
+    "install-service": "node scripts/install-launch-agent.js",
+    "test": "node --test server.test.js peers.test.js page.test.js project-board.test.js scripts/start.test.js scripts/list-sessions.test.js scripts/install-launch-agent.test.js window/main.test.js",
+    "sessions": "node scripts/list-sessions.js"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "tower-window",
+  "productName": "AI Code",
+  "version": "1.0.0",
+  "description": "Floating desktop window for the AI Code session dashboard",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Rob Colvin",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "electron": "^43.3.0"
+  }
+}

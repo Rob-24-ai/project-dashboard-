@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Tower">
+<meta name="theme-color" content="#12110f">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'">
+<title>Tower · On your desk</title>
+<style>
+:root{color-scheme:dark;--bg:#13151b;--panel:#20242d;--ink:#f4f5f7;--muted:#b7bdc9;--rule:#39414e;--blue:#82adff;--control-border:#738096}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{overflow-y:auto}#tower{max-width:1120px;margin:0 auto;padding:26px 30px 36px;text-align:left}::selection{background:#82adff;color:#13151b}button,input,summary{font:inherit}button,summary{cursor:pointer}button{font-size:12px;background:transparent;color:var(--muted);border:1px solid transparent;border-radius:5px;padding:10px 12px;min-height:44px}button:hover{color:var(--ink);background:#2b3444}button:active{background:#39414e}button:disabled{opacity:.48;cursor:default}button:disabled:hover{background:transparent}button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px}a{color:var(--blue);text-underline-offset:3px}header{display:flex;justify-content:space-between;align-items:center;gap:22px;margin-bottom:22px}.brand{color:var(--blue);font-size:12px;letter-spacing:.14em}h1{font-size:29px;line-height:1.25;font-weight:500;margin:4px 0 0;letter-spacing:-.6px}.connection{font-size:12px;color:var(--muted);text-align:right;max-width:280px}.connection p{font-size:12px;margin:0}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding-bottom:20px}.search-wrap{flex:1;max-width:370px}input{font-size:16px;width:100%;min-width:0;min-height:44px;padding:10px 12px;background:var(--panel);color:var(--ink);border:1px solid var(--control-border);border-radius:6px;caret-color:var(--blue)}input::placeholder{color:var(--muted);opacity:1}nav{display:flex;gap:4px}nav button{white-space:nowrap}nav button[aria-pressed="true"]{background:var(--blue);color:var(--bg)}h2{font-size:14px;font-weight:500;margin:0;padding:14px 0;color:var(--muted)}h2 span{font-size:12px;margin-left:12px;font-weight:400}.attention{border-top:1px solid #b98143}.attention>h2{color:#ffbc70}.attention p{color:#e2c5a5}.attention .question{color:#ffe0b8}.attention>.records>.desk-record{padding:12px 18px;background:#382b20;margin-bottom:16px;border-bottom:0;border-left:1px solid #ffbc70}.current,.later,.all{border-top:1px solid var(--rule)}.desk-record{padding:17px 0;border-bottom:1px solid var(--rule);min-width:0}.record-top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.record-top>div{min-width:0}h3{font-size:23px;line-height:1.4;margin:2px 0 6px;font-weight:500;overflow-wrap:anywhere}.app{font-size:11px;color:var(--muted)}.state{flex-shrink:0;font-size:12px;padding:4px 9px;border-radius:5px;white-space:nowrap;margin-top:17px;background:#2d3340;color:#dce2ed}.state.decision{color:#ffbc70;background:#51391f}.state.working{color:#a4c4ff;background:#243854}.state.finished{color:#91ddb9;background:#20372d}p{margin:4px 0 8px;font-size:14px;color:var(--muted);max-width:780px;overflow-wrap:anywhere}.question{color:#ffe0b8;font-size:16px}.summary-meta,.related-hint{font-size:11px;color:var(--muted);margin-top:7px}.record-bottom{display:flex;align-items:flex-start;gap:18px}.record-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;flex-shrink:0}.open{color:#a4c4ff;background:#243854}.open:hover{color:var(--bg);background:var(--blue)}details{min-width:0;flex:1}summary{min-height:44px;padding:11px 0;font-size:12px;color:var(--blue);width:fit-content}details p{font-size:13px;padding:4px 0}.context{margin:4px 0 12px;font-size:12px;color:var(--muted)}.context dt{margin-top:8px;color:var(--ink)}.context dt button{padding-left:0;color:var(--blue)}.context dd{margin:2px 0;overflow-wrap:anywhere}.related{border-left:1px solid var(--rule);padding-left:18px;margin:6px 0 14px}.related .desk-record:last-child{border-bottom:0}.related .record-top{flex-wrap:wrap;gap:2px}.related .state{margin:0 0 6px}.related h3{font-size:20px}.related .record-bottom{flex-wrap:wrap;gap:4px}.related .record-actions{width:100%;justify-content:flex-start}.later{margin-top:24px;padding:0 16px 16px;background:var(--panel)}.later .desk-record:last-child{border-bottom:0}.empty{padding:8px 0 18px;font-size:13px}.description{font-size:12px;margin-bottom:12px}.warning{padding:10px 12px;border:1px solid #b98143;border-radius:5px;color:#ffbc70;font-size:12px;margin:0 0 16px}.offline-label{color:#ffbc70}#notice{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);max-width:calc(100% - 28px);width:max-content;padding:12px 16px;background:#243854;color:var(--ink);font-size:13px;border:1px solid #738096;border-radius:6px;box-shadow:0 5px 20px #0006;z-index:2}#notice:empty{display:none}.skeleton{height:100px;background:var(--panel);margin:14px 0;border-radius:5px}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}[hidden]{display:none!important}
+@media(max-width:650px){#tower{padding:20px 17px 28px}header{align-items:flex-start;gap:12px}h1{font-size:26px}.connection{max-width:150px;font-size:11px}.toolbar{display:block}.search-wrap{display:block;max-width:none}nav{margin-top:12px}.record-top{flex-wrap:wrap;gap:2px}.state{margin:0 0 6px}.record-bottom{flex-wrap:wrap;gap:0}.record-actions{width:100%;justify-content:flex-start}.record-actions button:first-child{padding-left:0}details{flex-basis:100%}h3{font-size:21px}.later{padding:0 12px 12px}.attention>.records>.desk-record{padding:12px}h2 span{display:inline-block;margin-left:8px}}
+.title-spinner{display:inline-block;width:14px;height:14px;margin-left:10px;vertical-align:middle;border:2px solid var(--blue);border-right-color:transparent;border-radius:50%;animation:working-spin .85s linear infinite}@keyframes working-spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.title-spinner{animation:none}}
+/* The spinner and copy button sit beside the first line of a wrapped title, never on a line of their own. */
+h3.chat-title{display:flex;align-items:baseline}h3.chat-title>.title-spinner,h3.chat-title>.copy-title{flex:none}
+button.copy-title{position:relative;display:inline-block;width:18px;height:18px;margin-left:6px;padding:0;min-height:0;vertical-align:middle;color:var(--muted);background:transparent;border:0;border-radius:4px;cursor:pointer}button.copy-title:hover{color:var(--blue);background:transparent}/* The button's bottom edge sits on the title's baseline, so the front box is drawn flush with that edge. */button.copy-title::before,button.copy-title::after{content:'';position:absolute;width:7px;height:8px;border:1.25px solid currentColor;border-radius:1.5px}button.copy-title::before{left:3px;bottom:2.5px}button.copy-title::after{left:5.6px;bottom:0}button.copy-title.copied::before{display:none}button.copy-title.copied::after{content:'\2713';left:50%;width:auto;height:auto;border:0;transform:translateX(-50%);font:700 12px/1 system-ui,sans-serif}
+button.title-open{font:inherit;color:inherit;text-align:left;background:transparent;border:0;border-radius:2px;padding:0;min-height:0;overflow-wrap:anywhere}button.title-open:hover{color:var(--blue);background:transparent;text-decoration:underline;text-underline-offset:4px}
+.machine{display:inline-block;margin-left:8px;padding:0 6px;border:1px solid var(--rule);border-radius:4px;color:var(--ink);font-size:11px;line-height:1.6;max-width:100%;overflow-wrap:anywhere;vertical-align:baseline}.title-text{overflow-wrap:anywhere}.view-only{margin:12px 0 0;font-size:12px;color:var(--muted);max-width:240px}.peer-status{margin:0 0 16px;padding:6px 12px;border-left:2px solid var(--control-border);font-size:12px;color:var(--muted);max-width:none;overflow-wrap:anywhere}@media(max-width:650px){.view-only{max-width:none;margin-top:4px}}
+.question,.recap{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}.earlier-requests{border-top:1px solid var(--rule);margin-top:18px}.earlier-requests>summary{font-size:14px;color:var(--muted)}.earlier-requests>.records{padding:0 12px}.full-context{white-space:pre-wrap}.request-history{font-size:11px;color:var(--muted)}
+:root{--bg:#12110f;--panel:#1c1a17;--ink:#f1ece4;--muted:#b8b0a4;--rule:#34302a;--blue:#e9b872;--control-border:#82786a;--raised:#24211d;--orange:#f5ab66;--gold:#f2c14e}
+body{min-height:100vh;background:linear-gradient(to bottom right,#1b232d 0%,#1d2529 50%,#1e2923 100%);background-attachment:fixed}
+#tower{max-width:1500px;padding:26px 26px 36px}h1{font:700 32px/1.15 Georgia,serif;letter-spacing:-.025em}.brand{color:var(--muted)}button:hover{background:#34302a}button:active{background:#494035}::selection{background:#e9b872;color:#12110f}.title-spinner{border-color:var(--gold);border-right-color:transparent}.state.decision{color:var(--orange);background:#49301f}.source-note{font-size:12px;color:var(--muted);margin:0 0 16px;max-width:none}.source-note a{color:inherit}.project-alerts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;padding:9px 13px;background:var(--raised);border-radius:10px;margin-bottom:18px}.alert-group{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.activity-label{display:inline-flex;gap:8px;align-items:center;white-space:nowrap;font-size:13px}.activity-label.needs{color:var(--orange)}.activity-label.working{color:var(--gold)}.activity-dot{display:inline-block;flex:none;width:8px;height:8px;border-radius:50%;background:currentColor}.needs-pulse{animation:needs-pulse 1.2s ease-in-out infinite}.working-dot{position:relative;width:11px;height:11px;background:transparent;border:1.5px solid #f2c14e38;border-top-color:currentColor;animation:working-spin 1s linear infinite}.working-dot::after{content:'';position:absolute;top:-2px;left:50%;width:3px;height:3px;background:currentColor;border-radius:50%;transform:translateX(-50%)}.jump{min-height:34px;padding:5px 9px;background:#34302a;color:var(--ink);font-size:13px}.jump[aria-current="location"]{background:#494035}.alert-empty{font-size:12px;color:var(--muted)}
+.project-legend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}.project-stage{color:var(--stage,#aaa399);background:color-mix(in srgb,var(--stage,#aaa399) 14%,var(--panel));font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap;line-height:1.5}.stage-live{--stage:#5fd18b}.stage-built{--stage:#6fa8ff}.stage-prog{--stage:#4fd1d4}.stage-wait{--stage:#f2c14e}.stage-pause{--stage:#c39bff}.stage-stuck{--stage:#ff6b6b}.stage-park{--stage:#aaa399}.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}.project-card{min-width:0;background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:15px}.project-heading,.note-heading{list-style:none;width:100%;color:var(--ink)}.project-heading::-webkit-details-marker,.note-heading::-webkit-details-marker{display:none}.project-heading{display:grid;grid-template-columns:14px minmax(0,1fr);gap:7px 8px;align-items:start;padding:0;min-height:44px}.project-heading h2{font:700 22px/1.18 Georgia,serif;letter-spacing:-.01em;color:var(--ink);padding:0;overflow-wrap:anywhere}.project-heading>.project-stage{grid-column:2;width:fit-content}.fold-chevron{display:inline-block;width:14px;height:14px;margin-top:5px;flex:none;color:var(--muted);font:900 23px/14px system-ui,sans-serif;transform-origin:center;transition:transform .12s ease}details[open]>.project-heading>.fold-chevron,details[open]>.note-heading>.fold-chevron{transform:rotate(90deg)}.project-body{padding-top:10px}.project-freshness{font-size:12px;font-weight:700;color:#e9b872;margin-bottom:12px}.project-description{font-size:14px;margin-bottom:14px}.project-next{background:var(--raised);border-radius:9px;padding:9px 10px;margin-top:12px;font-size:14px;color:var(--ink)}.project-next strong{color:#e9b872}.note-group{margin-top:5px}.note-heading{display:flex;gap:8px;align-items:center;color:var(--stage);padding:8px 0;font-size:13px;font-weight:700}.note-heading>.fold-chevron{margin-top:0;color:inherit}.project-notes{list-style:none;margin:0 0 8px;padding:0;display:flex;flex-direction:column;gap:10px}.project-notes li{padding-left:22px;font-size:14px;overflow-wrap:anywhere}.live-chats{margin-bottom:15px}.live-chats>.description{font-size:11px;margin:0 0 6px;color:var(--muted)}.project-card .desk-record{background:var(--raised);border-radius:8px;padding:11px 12px;margin:0 0 8px;border:0;scroll-margin-top:18px;outline:2px solid transparent;outline-offset:3px}.project-card .desk-record.request-row{background:#38291d}.project-card .record-top{gap:8px;flex-wrap:wrap}.project-card .record-top>div{width:100%}.project-card .record-top h3{font:700 16px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:3px 0 6px}.project-card .app{font-size:11px}.project-card .state{font-size:11px;margin:0 0 4px;padding:0;background:transparent;color:var(--muted);display:inline-flex;align-items:center;gap:7px}.project-card .state.decision{color:var(--orange)}.project-card .state.working{color:var(--gold)}.project-card .question{font-size:14px;color:#e9c5a3}.project-card .recap{font-size:13px}.project-card .record-bottom{display:block}.project-card .record-actions{justify-content:flex-start;gap:0}.project-card .record-actions button{padding:6px;min-height:34px}.project-card .record-actions button:first-child{padding-left:0}.project-card .related{padding-left:10px}.project-card summary{font-size:12px}.project-card .note-heading{font-size:13px}.project-card .record-highlight,.desk-record.record-highlight{outline:2px solid #e9b872;outline-offset:3px}.other-work{margin-top:24px}.other-work>h2{font:700 23px/1.2 Georgia,serif;color:var(--ink);padding:10px 0}.other-work>.records{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.other-work>.records>.desk-record{padding:14px;background:var(--panel);border:1px solid var(--rule);border-radius:10px}.other-work .record-top{flex-wrap:wrap}.other-work .record-bottom{display:block}.other-work h3{font-size:18px}.other-work .record-actions{justify-content:flex-start}.board-shelf{margin-top:24px;border-top:1px solid var(--rule)}.board-shelf>summary{font-size:14px;color:var(--muted)}
+@keyframes needs-pulse{0%,100%{opacity:.6;transform:scale(.9);box-shadow:0 0 0 0 transparent}50%{opacity:1;transform:scale(1.2);box-shadow:0 0 0 5px #f5ab662e}}
+#back-to-top{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:3;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:10px 14px;background:var(--raised);color:var(--ink);border:1px solid var(--control-border);border-radius:8px;box-shadow:0 3px 12px #0004}#back-to-top:hover{background:#34302a}#back-to-top span{font-size:18px;font-weight:700;line-height:1}
+/* Sound switches sit beside their label, sized to the strip so a click never moves it. */
+.jump.just-finished{color:var(--muted);background:#2a2723}
+.sound-toggle{display:inline-flex;align-items:center;justify-content:center;flex:none;width:30px;height:30px;min-height:30px;padding:0;margin-left:-3px;border-radius:6px}.sound-toggle.needs{color:var(--orange)}.sound-toggle.working{color:var(--gold)}.sound-toggle[aria-pressed="true"]{opacity:.7}.sound-toggle svg{display:block;width:17px;height:17px}@media(pointer:coarse){.sound-toggle{width:44px;height:44px;min-height:44px}}
+.project-alerts .jump{max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:left}.alert-group{min-width:0;max-width:100%}
+.project-meta{grid-column:2;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;min-width:0}.project-meta>.project-stage{white-space:normal}.project-attention{font-size:12px}.project-source-date{grid-column:2;font-size:10px;color:var(--muted);overflow-wrap:anywhere}
+.project-need{margin-bottom:12px}.chat-need{margin:8px 0}.project-need.waiting,.chat-need.waiting{padding:10px 12px;background:#38291d;border-left:2px solid var(--orange);border-radius:6px}.project-need .project-need-label{font-size:12px;font-weight:600;color:var(--orange);margin-bottom:4px}.chat-need .project-need-label{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px}.project-need:not(.waiting) .project-need-label{color:var(--muted)}.project-need .project-need-reason,.chat-need .project-need-reason{font-size:13px;color:var(--ink);white-space:pre-wrap}.project-need .project-need-source{font-size:12px;color:var(--muted);margin:6px 0 2px}.project-need-source .need-app{margin-right:6px}button.need-chat{font:inherit;color:var(--blue);text-align:left;background:transparent;border:0;padding:0;min-height:0;text-decoration:underline;overflow-wrap:anywhere}button.need-chat:hover{background:transparent;color:var(--ink)}.project-actions{display:flex;flex-wrap:wrap;gap:4px}.project-actions button{padding:7px 10px;min-height:36px}.project-actions button:first-child{padding-left:0}.project-highlight{outline:2px solid var(--blue);outline-offset:3px}
+.project-column{display:flex;flex-direction:column;gap:14px;min-width:0}.project-column>.project-card{flex:none}.other-work>.note-heading{font:700 23px/1.2 Georgia,serif;color:var(--ink);padding:10px 0}.other-work>.note-heading>.fold-chevron{margin-top:0}
+.other-work>.records{align-items:start}.other-work>.records>.other-card{padding:14px;background:var(--panel);border:1px solid var(--rule);border-radius:10px}.card-heading{display:flex;align-items:flex-start;gap:8px;list-style:none;width:100%;padding:0;color:var(--ink)}.card-heading::-webkit-details-marker{display:none}.card-heading>.fold-chevron{margin-top:23px}.card-heading>.record-top{flex:1;min-width:0;gap:4px 12px}.card-heading .state{margin:0}.other-card[open]>.card-heading>.fold-chevron{transform:rotate(90deg)}.other-card>.desk-record{padding:12px 0 0;border:0}.other-card:has(>.record-highlight){outline:2px solid #e9b872;outline-offset:3px}.other-card>.desk-record.record-highlight{outline:0}
+@media(max-width:1100px){.project-heading h2{font-size:21px}}@media(max-width:820px){.project-grid,.other-work>.records{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){#tower{padding:20px 15px 28px}.project-grid,.other-work>.records{grid-template-columns:minmax(0,1fr)}.project-alerts{align-items:stretch;flex-direction:column;gap:12px}h1{font-size:27px}}@media(pointer:coarse){.jump,.note-heading{min-height:44px}}@media(prefers-reduced-motion:reduce){.needs-pulse,.working-dot,.title-spinner{animation:none}.fold-chevron{transition:none}}
+</style>
+</head>
+<body>
+<div id="tower">
+<header><div><span class="brand">TOWER</span><h1 id="page-title" tabindex="-1">On your desk</h1></div><div class="connection"><p id="connection-status" role="status" aria-live="polite">Connecting to your sessions…</p><button id="retry" type="button" hidden>Retry connection</button></div></header>
+<div class="toolbar"><label class="search-wrap"><span class="sr">Search your work</span><input id="search" type="search" placeholder="Find a piece of work" autocomplete="off" spellcheck="false"></label><nav aria-label="Session views"><button id="desk-view" type="button" aria-pressed="true">On your desk</button><button id="all-view" type="button" aria-pressed="false">All sessions</button></nav></div>
+<p id="pin-status" class="warning" role="status" hidden></p>
+<p id="peer-status" class="peer-status" role="status" aria-live="polite" hidden></p>
+<main id="work" aria-label="Your work"><p class="empty">Checking sessions…</p><div class="skeleton" aria-hidden="true"></div><div class="skeleton" aria-hidden="true"></div></main>
+<div id="notice" role="status" aria-live="polite"></div>
+</div>
+<button id="back-to-top" type="button" hidden><span aria-hidden="true">↑</span>Back to top</button>
+<script>
+'use strict';
+// Pure view rules are also exercised by page.test.js.
+function fullTitle(session) { return String(session.fullTitle || session.searchTitle || session.title || 'Untitled conversation'); }
+function appName(session) { return session.agent === 'claude' ? 'Claude' : session.agent === 'codex' ? 'Codex' : 'Unknown app'; }
+function stateName(session) { return ({decision:'Needs you',working:'Working',finished:'Finished for now'})[session.state] || 'Status unclear'; }
+function isPinned(session) { return !!(session.nativePinned || session.pinned); }
+function baseEligible(session, now) { return session.state === 'working' || session.state === 'decision' || session.parked || session.onDesk || isPinned(session) || Number(session.lastActivity) >= now - 86400000; }
+function matches(session, query) { return !query || [fullTitle(session),appName(session),session.machine,session.summary?.text,session.question,session.context?.workPath,session.context?.cwd,session.context?.repositoryPath,session.context?.branch].some(value => String(value || '').toLocaleLowerCase().includes(query)); }
+function parentMap(sessions) {
+  const byId = new Map(sessions.map(session => [session.id,session]));
+  const parents = new Map();
+  for (const session of sessions) {
+    const parentId = session.relationship?.parentId;
+    if (!parentId || parentId === session.id || !byId.has(parentId)) continue;
+    const seen = new Set([session.id]);
+    let cursor = parentId, cyclic = false;
+    while (cursor && byId.has(cursor)) {
+      if (seen.has(cursor)) { cyclic = true; break; }
+      seen.add(cursor); cursor = byId.get(cursor).relationship?.parentId;
+    }
+    if (!cyclic) parents.set(session.id,parentId);
+  }
+  return parents;
+}
+function earlierRequest(session, now) { return session.state==='decision' && (!!session.dismissed || (session.decisionSource!=='permission-prompt' && Number(session.lastActivity)>0 && Number(session.lastActivity)<now-86400000)); }
+function selectDesk(sessions, now) {
+  const parents = parentMap(sessions), byId = new Map(sessions.map(session => [session.id,session]));
+  const selected = new Set(sessions.filter(session => baseEligible(session,now)).map(session => session.id));
+  for (const id of [...selected]) { let parent = parents.get(id); while (parent) { selected.add(parent); parent = parents.get(parent); } }
+  const attention = sessions.filter(session => session.state === 'decision' && !earlierRequest(session,now));
+  const earlier = sessions.filter(session => earlierRequest(session,now));
+  const later = sessions.filter(session => session.parked);
+  const current = sessions.filter(session => {
+    if (!selected.has(session.id) || session.parked || session.state === 'decision') return false;
+    const parent = byId.get(parents.get(session.id));
+    // A parked parent must not put its active children out of sight.
+    return !parent || parent.parked || earlierRequest(parent,now) || !selected.has(parent.id);
+  });
+  return {attention,earlier,current,later,parents};
+}
+function stableOrder(sessions, positions) {
+  const newcomers = sessions.filter(session => !positions.has(session.id)).sort((a,b) => Number(b.lastActivity || 0)-Number(a.lastActivity || 0) || String(a.id).localeCompare(String(b.id)));
+  for (const session of newcomers) positions.set(session.id,positions.size);
+  return [...sessions].sort((a,b) => positions.get(a.id)-positions.get(b.id));
+}
+// Rows hold still while the panel is in use. Once it is not, the order is rebuilt
+// from latest activity at most once a minute, so a window left open for days
+// never keeps that day's work on top.
+function shouldResort(inUse, lastSorted, nowMs) { return !inUse && nowMs-lastSorted>=60000; }
+function allViewOrder(sessions) { return [...sessions.filter(session => !session.parked),...sessions.filter(session => session.parked)]; }
+// Only verified parent edges participate. A saved recap and recorded activity are
+// separate evidence: neither changes the parent conversation's own lifecycle.
+function recordContext(session, sessions, parents) {
+  const branches = new Map();
+  for (const candidate of sessions) {
+    const parent = parents.get(candidate.id);
+    if (parent) { if (!branches.has(parent)) branches.set(parent,[]); branches.get(parent).push(candidate); }
+  }
+  const queue = [session], seen = new Set();
+  let summarySession = session.summary?.text ? session : null, activitySession = null;
+  const timestamp = value => Number.isFinite(Number(value)) && Number(value)>0 ? Number(value) : 0;
+  for (let index=0; index<queue.length; index++) {
+    const candidate=queue[index];
+    if (seen.has(candidate.id)) continue;
+    seen.add(candidate.id);
+    if (candidate.summary?.text && timestamp(candidate.summary.updatedAt)>timestamp(summarySession?.summary?.updatedAt)) summarySession=candidate;
+    if (candidate.state==='working' && timestamp(candidate.lastActivity)>timestamp(activitySession?.lastActivity)) activitySession=candidate;
+    queue.push(...(branches.get(candidate.id) || []));
+  }
+  if (timestamp(activitySession?.lastActivity)<=timestamp(summarySession?.summary?.updatedAt)) activitySession=null;
+  return {summarySession,activitySession};
+}
+// Rows from another Mac, and every row seen from another device, are view only.
+function isLoopbackHost(hostname) { return hostname === undefined || hostname === null || ['','127.0.0.1','localhost','[::1]','::1'].includes(String(hostname)); }
+function viewOnly(session, remoteViewer) { return !!(remoteViewer || session.viewOnly || session.peer); }
+function viewOnlyCaption(session, remoteViewer, ownMachine) {
+  const machine = String(session.machine || ownMachine || '').trim();
+  if (!remoteViewer) return 'On '+(machine || 'another Mac')+'. Open it there.';
+  if (!machine) return 'Open it on its Mac.';
+  return 'Open it on '+(/^(?:the|my|this) /i.test(machine) || /'s\b/i.test(machine) ? machine : 'the '+machine)+'.';
+}
+function peerStatusLines(peers) { return (Array.isArray(peers) ? peers : []).filter(peer => peer && peer.reachable === false && typeof peer.message === 'string' && peer.message).map(peer => peer.message); }
+function ownActionControl(record, action) { return [...record.querySelectorAll('[data-action]')].find(control => control.dataset.action===action && control.closest('[data-record-key]')===record); }
+const projectStages={live:'Live',built:'Built, not live',prog:'In progress',wait:'Waiting on me',pause:'Paused',stuck:'Stuck',park:'Parked'};
+// Project membership is a saved exact identity, never a guess from names or paths.
+// Direct mappings win over inherited edges, including children mapped elsewhere.
+// justFinished: chats that just ended a working turn; they stay among the working
+// alerts (in place, never when kept for later) until the controller lets them go.
+function selectProjectBoard(board,sessions,at,justFinished=new Set()) {
+  const projects=[],seenProjects=new Set(),byId=new Map(sessions.map(session=>[session.id,session]));
+  for(const candidate of Array.isArray(board?.projects)?board.projects:[]) {
+    if(!candidate || typeof candidate.id!=='string' || !candidate.id || seenProjects.has(candidate.id) || typeof candidate.title!=='string')continue;
+    seenProjects.add(candidate.id);projects.push({...candidate,notes:Array.isArray(candidate.notes)?candidate.notes.filter(note=>note&&typeof note.text==='string'):[],sessionIds:Array.isArray(candidate.sessionIds)?candidate.sessionIds:[]});
+  }
+  const parents=parentMap(sessions),assignments=new Map();
+  for(const project of projects)for(const id of project.sessionIds)if(typeof id==='string' && byId.has(id) && !assignments.has(id))assignments.set(id,project.id);
+  const explicit=new Map(assignments);
+  for(const session of sessions) {
+    if(assignments.has(session.id))continue;
+    let parent=parents.get(session.id);
+    while(parent) { if(explicit.has(parent)){assignments.set(session.id,explicit.get(parent));break;} parent=parents.get(parent); }
+  }
+  const active=new Set(sessions.filter(session=>(session.state==='decision'&&!earlierRequest(session,at)) || (!session.parked&&!earlierRequest(session,at)&&baseEligible(session,at))).map(session=>session.id));
+  for(const id of [...active]) {
+    let parent=parents.get(id);
+    while(parent) {
+      const ancestor=byId.get(parent);
+      if(ancestor.parked || earlierRequest(ancestor,at) || assignments.get(parent)!==assignments.get(id))break;
+      active.add(parent);parent=parents.get(parent);
+    }
+  }
+  const activeParents=new Map([...parents].filter(([child,parent])=>active.has(child)&&active.has(parent)&&assignments.get(child)===assignments.get(parent)));
+  const roots=sessions.filter(session=>active.has(session.id)&&!activeParents.has(session.id));
+  const alerts=sessions.filter(session=>active.has(session.id)&&((session.state==='decision'&&!earlierRequest(session,at)) || (session.state==='working'&&!session.parked) || (session.state==='finished'&&!session.parked&&justFinished.has(session.id))));
+  return {projects,assignments,active,parents:activeParents,roots,alerts,source:board?.source};
+}
+function projectMatches(project,query) { return !query || [project.title,project.description,project.freshness,project.next,project.attention?.reason,...project.notes.map(note=>note.text)].some(value=>String(value||'').toLocaleLowerCase().includes(query)); }
+function projectNeed(project,selection,query) {
+  const requests=selection.alerts.filter(session=>session.state==='decision'&&selection.assignments.get(session.id)===project.id&&(matches(session,query)||projectMatches(project,query)));
+  const state=project.attention?.state || (project.stage==='wait'||requests.length?'waiting':'resolved');
+  const asker=project.attention?.sessionId&&allSessions.find(session=>session.id===project.attention.sessionId);
+  return {state,requests,shown:state==='waiting'&&(projectMatches(project,query)||requests.length>0||!!(query&&asker&&matches(asker,query)))};
+}
+function projectColumnsForWidth(width) { return width<=560?1:width<=820?2:3; }
+// Sound cues mark changes between polls. The first poll, and the first rows seen
+// from another Mac, only set the baseline, so opening Tower never chimes. A request
+// chimes when its event is new; an unchanged request never repeats. Rows that drop
+// out of a poll keep their last state, so a returning row does not replay.
+function soundCues(memory, sessions, at) {
+  const rows=new Map(memory?.rows||[]), sources=new Set(memory?.sources||[]);
+  const sourceOf=session=>session.peer?'peer:'+String(session.machine||''):'local';
+  const seeding=new Set(sessions.map(sourceOf).filter(source=>!memory||!sources.has(source)));
+  let needs=false;const finished=[];
+  for(const session of sessions) {
+    const before=rows.get(session.id), eventId=session.eventId??null;
+    if(!seeding.has(sourceOf(session))) {
+      if(session.state==='decision' && !earlierRequest(session,at) && (!before || before.eventId!==eventId))needs=true;
+      if(before?.state==='working' && session.state==='finished')finished.push(session.id);
+    }
+    rows.set(session.id,{state:session.state,eventId});
+  }
+  for(const source of seeding)sources.add(source);
+  sources.add('local');
+  return {memory:{rows,sources},cue:needs?'needs':finished.length?'finished':null,finished};
+}
+// Browser controller.
+if (location.protocol === 'file:') location.replace('http://127.0.0.1:4433/');
+const work = document.getElementById('work'), search = document.getElementById('search');
+const statusLine = document.getElementById('connection-status'), retry = document.getElementById('retry');
+const positions = new Map(), pending = new Set(), expanded = new Set(), parking = new Map(), folds = new Map();
+let allSessions = [], online = false, hasData = false, view = 'desk', refreshing = null, fingerprint = '', noticeTimer;
+let projectBoard=null, projectBoardStatus='', highlightedSession=null, highlightedProject=null;
+let projectColumnCount=projectColumnsForWidth(window.innerWidth);
+let now = Date.now(), lastContact = 0, lastSorted = Date.now(), resortOnNextData = false;
+let peerView = {configured:false, remote:!isLoopbackHost(location.hostname), machine:''};
+if (window.towerLayout) { document.documentElement.classList.add('desktop'); window.towerLayout.report({view:'desk',width:980,height:760}); }
+// Sound cues. Only the desktop panel (its preload bridge is window.towerLayout)
+// plays them, so a browser tab beside it never doubles a ping. Each switch is saved
+// on this device; detection runs while muted so unmuting never replays old events.
+const soundSwitches={needs:{key:'tower.sound.needs',name:'Needs me sound',tipOn:'Mute the Needs me sound (a soft chime when a chat needs you)',tipOff:'Unmute the Needs me sound (a soft chime when a chat needs you)'},finished:{key:'tower.sound.finished',name:'Working chat finished sound',tipOn:'Mute the sound when a working chat finishes (a soft ding)',tipOff:'Unmute the sound when a working chat finishes (a soft ding)'}};
+const soundMuted={};
+for(const kind of Object.keys(soundSwitches)) { try { soundMuted[kind]=localStorage.getItem(soundSwitches[kind].key)==='off'; } catch (_) { soundMuted[kind]=false; } }
+let soundMemory=null, audioContext=null;
+const speakerIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+const speakerOffIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M3.5 3.5l17 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".45"/></svg>';
+function playCue(kind) {
+  const AudioCtor=window.AudioContext || window.webkitAudioContext;
+  if(!window.towerLayout || !AudioCtor || soundMuted[kind])return;
+  try {
+    audioContext=audioContext || new AudioCtor();
+    if(audioContext.state==='suspended')Promise.resolve(audioContext.resume()).catch(()=>{});
+    const start=audioContext.currentTime+0.03;
+    // Needs me: a rising fourth, E5 then A5. Finished: one softer, lower G4.
+    const notes=kind==='needs'?[[659.25,0,0.26,0.16],[880,0.13,0.32,0.15]]:[[392,0,0.42,0.12]];
+    for(const [frequency,offset,length,peak] of notes) {
+      const oscillator=audioContext.createOscillator(), gain=audioContext.createGain(), at=start+offset;
+      oscillator.type='sine';oscillator.frequency.setValueAtTime(frequency,at);
+      gain.gain.setValueAtTime(0.0001,at);gain.gain.exponentialRampToValueAtTime(peak,at+0.02);gain.gain.exponentialRampToValueAtTime(0.0001,at+length);
+      oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start(at);oscillator.stop(at+length+0.02);
+    }
+  } catch (_) { /* Sound is a courtesy; the dashboard never depends on it. */ }
+}
+// A chat that just finished stays grey in Working for ten seconds, timed on this
+// device. One timer re-renders at the next expiry so it leaves on time, not on a poll.
+const recentlyFinished=new Map(), FINISHED_LINGER=10000;
+let finishedTimer=null;
+function justFinishedIds() {
+  const at=Date.now();
+  for(const [id,since] of recentlyFinished)if(at-since>=FINISHED_LINGER)recentlyFinished.delete(id);
+  return new Set(recentlyFinished.keys());
+}
+function scheduleFinishedExpiry() {
+  clearTimeout(finishedTimer);finishedTimer=null;
+  if(!recentlyFinished.size)return;
+  const next=Math.min(...recentlyFinished.values())+FINISHED_LINGER;
+  finishedTimer=setTimeout(()=>{finishedTimer=null;justFinishedIds();renderWork(true);scheduleFinishedExpiry();},Math.max(0,next-Date.now())+20);
+}
+function noteSoundCues(sessions, at) {
+  const step=soundCues(soundMemory,sessions,at);soundMemory=step.memory;
+  const states=new Map(sessions.map(session=>[session.id,session.state]));
+  for(const id of [...recentlyFinished.keys()])if(states.get(id)!=='finished')recentlyFinished.delete(id);
+  for(const id of step.finished)if(!recentlyFinished.has(id))recentlyFinished.set(id,Date.now());
+  justFinishedIds();scheduleFinishedExpiry();
+  if(step.cue)playCue(step.cue);
+}
+function showSoundSwitch(button, kind) {
+  const spec=soundSwitches[kind], muted=!!soundMuted[kind];
+  // A fixed name; aria-pressed says whether it is muted.
+  button.setAttribute('aria-pressed',String(muted));button.setAttribute('aria-label',spec.name);
+  button.title=muted?spec.tipOff:spec.tipOn;button.innerHTML=muted?speakerOffIcon:speakerIcon;
+}
+function soundSwitch(kind) {
+  const button=element('button','sound-toggle '+(kind==='needs'?'needs':'working'));
+  button.type='button';button.id='sound-'+kind;button.dataset.action='sound-'+kind;showSoundSwitch(button,kind);
+  // Updated in place: no rebuild, so focus and scroll stay where they are.
+  button.addEventListener('click',()=>{ soundMuted[kind]=!soundMuted[kind];try { localStorage.setItem(soundSwitches[kind].key,soundMuted[kind]?'off':'on'); } catch (_) {} showSoundSwitch(button,kind); });
+  return button;
+}
+function element(tag, className, text) { const node = document.createElement(tag); if(className)node.className=className; if(text !== undefined)node.textContent=text; return node; }
+// Copies a chat's native title, ready to paste into the app's own chat search.
+async function copyText(text) {
+  try { await globalThis.navigator.clipboard.writeText(text); return true; }
+  catch {
+    const returnTo=document.activeElement;
+    try { const area=element('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.append(area);area.select();const copied=document.execCommand('copy');area.remove();return copied; }
+    catch { return false; } finally { returnTo?.focus?.(); }
+  }
+}
+function copyTitleButton(session) {
+  const button=element('button','copy-title');button.type='button';button.dataset.copyTitle='';button.dataset.action='copy-title';button.title='Copy title';
+  button.setAttribute('aria-label','Copy title: '+fullTitle(session));
+  button.addEventListener('click',event=>{
+    event?.preventDefault();event?.stopPropagation();
+    return copyText(fullTitle(session)).then(copied=>{if(!copied){notice('Could not copy the title. Select it and copy it instead.');return;}button.classList.add('copied');button.title='Copied';setTimeout(()=>{button.classList.remove('copied');button.title='Copy title';},1500);});
+  });
+  return button;
+}
+function dateLabel(value) { const date = new Date(Number(value)); return Number(value)>0 && Number.isFinite(date.getTime()) ? date.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) : 'Time unavailable'; }
+function notice(message) { clearTimeout(noticeTimer); document.getElementById('notice').textContent=message; noticeTimer=setTimeout(()=>{document.getElementById('notice').textContent='';},6500); }
+async function request(url, body) {
+  const controller=new AbortController(), timer=setTimeout(()=>controller.abort(),6000);
+  try { const response=await fetch(url,body===undefined ? {cache:'no-store',signal:controller.signal} : {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal}); const data=await response.json(); if(!response.ok || data.ok===false)throw new Error('Request failed'); return data; }
+  finally { clearTimeout(timer); }
+}
+function actionButton(label, action, session, callback) {
+  const button=element('button',action==='open'?'open':'',label); button.type='button'; button.dataset.action=action;
+  button.disabled=!online || pending.has(session.id) || (action==='open' && session.focusable===false);
+  button.setAttribute('aria-label',label+': '+fullTitle(session)+' ('+appName(session)+')');
+  if(action==='open')button.title=session.agent==='claude'?'Opens Claude. Select this conversation in the app.':session.focusable===false?'Open the desktop app first.':'Open this conversation in Codex.';
+  button.addEventListener('click',callback); return button;
+}
+function setParked(id, parked) { parking.set(id,parked);allSessions=allSessions.map(row => row.id===id ? {...row,parked} : row); }
+async function act(session, kind) {
+  if(!online || pending.has(session.id) || viewOnly(session,peerView.remote))return;
+  const returnAction=document.activeElement?.dataset.action;
+  pending.add(session.id); renderWork(true);
+  try {
+    if(kind==='open') { const result=await request('/api/focus',{id:session.id}); if(result.mode==='app' || result.mode==='app-only' || session.agent==='claude')notice('Claude opened. Select “'+fullTitle(session)+'” there.'); }
+    else if(kind==='dismiss') { await request('/api/dismiss',{id:session.id,dismissId:session.dismissId}); notice('Request moved to Earlier requests. The conversation stays open.'); await refresh(true); }
+    else if(kind==='finder') { await request('/api/reveal',{id:session.id}); notice('Working location opened in Finder.'); }
+    else {
+      // Move the row now. Saving can take a few seconds on a busy Mac.
+      setParked(session.id,!session.parked);renderWork(true);
+      notice(session.parked?'Back in front of you.':'Kept for later. A new question will still appear at the top.');
+      await request('/api/organize',{id:session.id,parked:!session.parked}); await refresh(true);
+    }
+  } catch (_) { if(kind==='parked')setParked(session.id,!!session.parked); notice(kind==='finder'?'Could not open this location. It may have moved or be unavailable on this Mac.':kind==='open'?'Could not open the conversation. Open its desktop app and try again.':'Could not save that change. Your work has not moved. Try again.'); }
+  finally {
+    pending.delete(session.id); parking.delete(session.id); renderWork(true);
+    if(returnAction && document.activeElement===document.body) {
+      const records=[...work.querySelectorAll('[data-session-id]')].filter(node=>node.dataset.sessionId===session.id);
+      const record=records.find(node=>!node.closest('details:not([open])'));
+      const card=records.map(node=>node.closest('.other-card')).find(node=>node && !node.parentElement.closest('details:not([open])'));
+      const control=(record && ownActionControl(record,returnAction)) || (card && ownActionControl(card,returnAction));
+      if(control && !control.disabled)control.focus({preventScroll:true});
+      else if(kind==='dismiss')work.querySelector('.earlier-requests > summary')?.focus({preventScroll:true});
+    }
+  }
+}
+async function actProject(project,state) {
+  const key='project:'+project.id;
+  if(!online || peerView.remote || pending.has(key))return;
+  pending.add(key);renderWork(true);
+  try {
+    await request('/api/project',{id:project.id,attention:state});await refresh(true);
+    notice(state==='waiting'?'Project is in Needs me.':state==='later'?'Project kept for later.':'Project request marked resolved.');
+  } catch (_) { notice('Could not save that project change. Try again.'); }
+  finally {
+    pending.delete(key);renderWork(true);
+    const card=[...work.querySelectorAll('.project-card')].find(node=>node.dataset.detailKey===key);
+    card?.querySelector('summary')?.focus({preventScroll:true});
+  }
+}
+function childrenOf(session, parents) { return allSessions.filter(child => parents.get(child.id)===session.id); }
+// A working spin-off at any depth keeps its parent's spinner turning; one kept for later does not, as in the related-working chip.
+function branchHolds(session, id, parents, seen=new Set()) { if(seen.has(session.id))return false;seen.add(session.id);return childrenOf(session,parents).some(child=>child.id===id || branchHolds(child,id,parents,seen)); }
+function branchWorking(session, parents, seen=new Set()) { if(seen.has(session.id))return false;seen.add(session.id);return childrenOf(session,parents).some(child=>child.state==='working'&&!child.parked || branchWorking(child,parents,seen)); }
+function branchMatches(session, query, parents, seen=new Set()) { if(seen.has(session.id))return false;seen.add(session.id);return matches(session,query) || childrenOf(session,parents).some(child=>branchMatches(child,query,parents,seen)); }
+// ask: a project need raised by one chat; that chat's card shows it, at any depth.
+function row(session, scope, parents, ancestors=[], boardMode=false, foldCard=false, ask=null) {
+  const item=element('article','desk-record'); item.dataset.sessionId=session.id; item.dataset.recordKey=scope+':'+session.id;
+  item.tabIndex=-1;item.dataset.focusTarget='record';
+  if(highlightedSession===session.id)item.classList.add('record-highlight');
+  if(boardMode && session.state==='decision'&&!earlierRequest(session,now))item.classList.add('request-row');
+  const {summarySession,activitySession}=recordContext(session,allSessions,parents);
+  const relatedWorking=boardMode && session.state!=='working' && session.state!=='decision' && [...parents].some(([child,parent])=>{
+    let cursor=parent;while(cursor){if(cursor===session.id)return allSessions.some(candidate=>candidate.id===child&&candidate.state==='working'&&!candidate.parked);cursor=parents.get(cursor);}return false;
+  });
+  const top=element('div','record-top'), heading=element('div');
+  const title=element('h3','chat-title'), readOnly=viewOnly(session,peerView.remote);
+  if(readOnly)title.append(element('span','title-text',fullTitle(session)));
+  else {
+    const titleButton=actionButton(fullTitle(session),'open',session,event=>{if(foldCard)event?.preventDefault();act(session,'open');});
+    titleButton.className='title-open';
+    titleButton.setAttribute('aria-label','Open '+appName(session)+': '+fullTitle(session));
+    title.append(titleButton);
+  }
+  const working=session.state==='working';
+  if(working || branchWorking(session,parents)) {
+    const spinner=element('span','title-spinner');
+    // The related-working chip already says it in words, so the spinner stays silent beside it.
+    if(relatedWorking)spinner.setAttribute('aria-hidden','true');
+    else {spinner.setAttribute('role','img');spinner.setAttribute('aria-label',working?'Working':'Related chat working');}
+    title.append(spinner);
+  }
+  title.append(copyTitleButton(session));
+  const appLine=element('span','app',appName(session)+(session.parked?' · Kept for later':''));
+  if(peerView.configured && session.machine)appLine.append(element('span','machine',String(session.machine)));
+  heading.append(appLine,title);
+  const state=element('span','state '+(relatedWorking?'working':session.state || 'unknown'));
+  if(boardMode && (session.state==='decision'&&!earlierRequest(session,now) || relatedWorking)) {
+    const dot=element('span','activity-dot '+(relatedWorking?'working-dot':'needs-pulse'));dot.setAttribute('aria-hidden','true');state.append(dot);
+  }
+  state.append(element('span','',relatedWorking?'Related chat working':boardMode&&session.state==='finished'?'Turn ended':boardMode&&session.state==='decision'?'Needs me':stateName(session)));
+  state.title=session.state==='finished'?'The assistant finished its turn. This does not mean the project is done or its result has been verified.':session.state==='unknown'?'Tower cannot confirm the current status from available session evidence.':stateName(session);
+  top.append(heading); if(boardMode&&session.state!=='working' || session.state!=='working'&&session.state!=='finished')top.append(state); if(!foldCard)item.append(top);
+  const question=session.state==='decision' ? session.question || 'A decision or permission was requested. Open the conversation to see the request.' : '';
+  if(question) item.append(element('p','question',question));
+  if(ask && ask.sessionId===session.id && !ask.rendered) { ask.rendered=true;const block=ask.render(question);if(block)item.append(block); }
+  if(earlierRequest(session,now))item.append(element('p','request-history',(session.dismissed?'Previously dismissed':'Earlier request, not marked resolved')+' · '+dateLabel(session.lastActivity)));
+  if(summarySession) {
+    if(summarySession.id!==session.id) item.append(element('p','summary-meta','Latest update from related chat: '+fullTitle(summarySession)+' · '+stateName(summarySession)));
+    const duplicate=question && summarySession.id===session.id && (question.includes(summarySession.summary.text) || summarySession.summary.text.includes(question));
+    if(!duplicate)item.append(element('p','recap',summarySession.summary.text));
+    item.append(element('p','summary-meta',String(summarySession.summary.source || appName(summarySession)+' update')+' · '+dateLabel(summarySession.summary.updatedAt)+(summarySession.summary.stale?' · Earlier update; newer activity exists':'')));
+  } else if(!question)item.append(element('p','recap',session.state==='working'?'Working now. No saved summary is available yet.':'No saved summary is available. Open the conversation for context.'));
+  if(activitySession) item.append(element('p','summary-meta','Latest recorded activity · '+dateLabel(activitySession.lastActivity)+(activitySession.id!==session.id?' · '+fullTitle(activitySession):'')+' · Working'));
+  const children=(boardMode || ancestors.length<12) ? childrenOf(session,parents).filter(child => !ancestors.includes(child.id)) : [];
+  if(children.length) {
+    const counts=new Map(); for(const child of children)counts.set(stateName(child),(counts.get(stateName(child)) || 0)+1);
+    item.append(element('p','related-hint',children.length+' related '+(children.length===1?'chat':'chats')+' · '+[...counts].map(([name,count])=>count+' '+name.toLocaleLowerCase()).join(' · ')));
+  }
+  const bottom=element('div','record-bottom'), details=element('details');
+  details.dataset.detailKey=item.dataset.recordKey;
+  const query=search.value.trim().toLocaleLowerCase();
+  // A chat's open request nested in this fold opens it, so the request is never hidden by default.
+  const holdsAsk=!!(ask?.waiting && children.some(child=>child.id===ask.sessionId || branchHolds(child,ask.sessionId,parents,new Set(ancestors))));
+  details.open=(folds.has(details.dataset.detailKey)?folds.get(details.dataset.detailKey):expanded.has(details.dataset.detailKey)||holdsAsk) || !!(query && children.some(child=>branchMatches(child,query,parents)));
+  details.addEventListener('toggle',()=>{ folds.set(details.dataset.detailKey,details.open);if(details.open)expanded.add(details.dataset.detailKey);else expanded.delete(details.dataset.detailKey); });
+  const summary=element('summary','',children.length?'Details · related chats':'Details'); summary.dataset.action='details'; details.append(summary);
+  if(question) { details.append(element('p','description','Full request'),element('p','full-context',question)); }
+  if(summarySession && summarySession.summary.text!==question) {
+    details.append(element('p','description','Full update'+(summarySession.id!==session.id?' · '+fullTitle(summarySession):'')),element('p','full-context',summarySession.summary.text));
+  }
+  const context=element('dl','context');
+  const field=(label,value)=>{context.append(element('dt','',label),element('dd','',value));};
+  if(boardMode)field('Chat activity',session.state==='finished'?'Turn ended. Project stage is shown separately.':stateName(session));
+  field('Last activity',dateLabel(session.lastActivity));
+  if(readOnly) { /* Working locations stay on the Mac that owns the conversation. */ }
+  else if(session.context?.workPath) {
+    const label=element('dt');
+    label.append(actionButton('Folder path','finder',session,()=>act(session,'finder')));
+    context.append(label,element('dd','',session.context.workPath));
+  } else field('Folder path','The working location is not available yet.');
+  details.append(context);
+  if(children.length) { const related=element('div','related'); related.append(element('p','description','Related conversations, linked by the app')); for(const child of children)related.append(row(child,scope+'/'+session.id,parents,[...ancestors,session.id],boardMode,false,ask)); details.append(related); }
+  const actions=element('div','record-actions');
+  if(readOnly)actions.append(element('p','view-only',viewOnlyCaption(session,peerView.remote,peerView.machine)));
+  else {
+    actions.append(actionButton(session.parked?'Bring back':'Keep for later','parked',session,()=>act(session,'parked')));
+    if(session.state==='decision' && !session.dismissed && session.dismissId)actions.append(actionButton('Dismiss this request','dismiss',session,()=>act(session,'dismiss')));
+  }
+  bottom.append(details,actions); item.append(bottom);
+  if(!foldCard)return item;
+  const card=element('details','other-card'),key='other-card:'+session.id;card.dataset.detailKey=key;card.dataset.recordKey=key;
+  card.open=!!query || (folds.has(key)?folds.get(key):false);card.addEventListener('toggle',()=>folds.set(key,!!card.open));
+  const header=element('summary','card-heading'),chevron=element('span','fold-chevron','›');header.dataset.action='fold';chevron.setAttribute('aria-hidden','true');header.append(chevron,top);
+  item.setAttribute('aria-label',fullTitle(session));card.append(header,item);return card;
+}
+function snapshotUI() {
+  const active=document.activeElement;
+  const focus=work.contains(active) ? {key:active.closest('[data-record-key]')?.dataset.recordKey,action:active.dataset.action,record:active.dataset.focusTarget==='record',jumpId:active.dataset.jumpId,jumpProject:active.dataset.jumpProject,jumpNeed:active.dataset.jumpNeed} : null;
+  const y=window.scrollY;
+  for(const details of work.querySelectorAll('details')) { if(details.dataset.detailKey){folds.set(details.dataset.detailKey,!!details.open);if(details.open)expanded.add(details.dataset.detailKey);else expanded.delete(details.dataset.detailKey);} }
+  return ()=>{ if(focus?.jumpId || focus?.jumpProject) { const button=[...work.querySelectorAll(focus.jumpId?'[data-jump-id]':'[data-jump-project]')].find(node=>(focus.jumpId?node.dataset.jumpId===focus.jumpId:node.dataset.jumpProject===focus.jumpProject)&&node.dataset.jumpNeed===focus.jumpNeed);if(button && !button.disabled)button.focus({preventScroll:true}); } else if(focus?.key) { const record=[...work.querySelectorAll('[data-record-key]')].find(node=>node.dataset.recordKey===focus.key); const button=record && (focus.record?record:ownActionControl(record,focus.action)); if(button && !button.disabled)button.focus({preventScroll:true}); } window.scrollTo(0,y); };
+}
+function section(title, subtitle, className, sessions, emptyText, parents, query) {
+  const node=element('section',className); node.setAttribute('aria-label',title);
+  const heading=element('h2','',title); if(subtitle)heading.append(element('span','',subtitle)); node.append(heading);
+  const records=element('div','records');
+  const shown=sessions.filter(session=>view==='all'?matches(session,query):branchMatches(session,query,parents));
+  for(const session of shown) { const record=row(session,className,parents); if(query && !matches(session,query))record.querySelector('details').open=true;records.append(record); }
+  if(!shown.length)records.append(element('p','empty',query?'No matching work here.':emptyText));
+  node.append(records);return node;
+}
+function earlierRequests(sessions, parents, query) {
+  const shown=sessions.filter(session=>branchMatches(session,query,parents));
+  if(!shown.length)return null;
+  const details=element('details','earlier-requests');
+  details.dataset.detailKey='earlier-requests';details.dataset.recordKey='earlier-requests';
+  details.open=expanded.has(details.dataset.detailKey) || !!query;
+  details.addEventListener('toggle',()=>{if(details.open)expanded.add(details.dataset.detailKey);else expanded.delete(details.dataset.detailKey);});
+  const summary=element('summary','','Earlier requests · '+shown.length);summary.dataset.action='earlier';
+  details.append(summary,element('p','description','Older or dismissed requests stay here for reference. They have not been marked resolved.'));
+  const records=element('div','records');
+  for(const session of shown)records.append(row(session,'earlier',parents));
+  details.append(records);return details;
+}
+function boardFold(className,key,title,defaultOpen=true,queryOpen=false) {
+  const details=element('details',className);details.dataset.detailKey=key;details.dataset.recordKey=key;
+  details.open=!!queryOpen || (folds.has(key)?folds.get(key):defaultOpen);
+  details.addEventListener('toggle',()=>folds.set(key,!!details.open));
+  const summary=element('summary',className==='project-card'?'project-heading':'note-heading');summary.dataset.action='fold';
+  const chevron=element('span','fold-chevron','›');chevron.setAttribute('aria-hidden','true');summary.append(chevron,element(className==='project-card'?'h2':'span','',title));details.append(summary);return details;
+}
+function stagePill(stage) { return element('span','project-stage stage-'+(Object.hasOwn(projectStages,stage)?stage:'park'),projectStages[stage]||'Not recorded'); }
+function sourceDate(value,verbatim=false) { if(verbatim&&typeof value==='string'&&value)return value;const date=new Date(typeof value==='number'?value:String(value||''));return Number.isFinite(date.getTime())?date.toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'date unavailable'; }
+// Says where a project need came from when no chat card here shows it: the chat
+// that asked (labelled as chat cards are: app, title, copy), the saved project notes, or you.
+function needSource(project, selection) {
+  const line=element('p','project-need-source'),id=project.attention?.sessionId,session=id&&allSessions.find(row=>row.id===id);
+  if(session) {
+    const link=element('button','need-chat',fullTitle(session));link.type='button';link.dataset.action='need-chat';link.dataset.needChat=session.id;
+    link.setAttribute('aria-label','Go to the chat that asked: '+fullTitle(session));link.addEventListener('click',()=>jumpToSession(session.id,link));
+    line.append(element('span','need-app',appName(session)),link,copyTitleButton(session));
+  }
+  else if(id)line.textContent='Asked in a chat Tower no longer lists.';
+  else if(project.attention?.origin==='manual')line.textContent='Marked by you.';
+  else line.textContent='From your saved project notes · Source '+sourceDate(selection.source?.updatedAt,true);
+  return line;
+}
+function jumpToSession(id,button) {
+  const target=[...work.querySelectorAll('[data-session-id]')].find(node=>node.dataset.sessionId===id);
+  if(!target){notice(search.value.trim()?'The search is hiding that chat. Clear the search to see it.':'That chat is not on this page. Find it in All sessions.');return;}
+  let ancestor=target.parentElement;
+  while(ancestor&&ancestor!==work) { if(ancestor.tagName.toLocaleLowerCase()==='details'){ancestor.open=true;if(ancestor.dataset.detailKey)folds.set(ancestor.dataset.detailKey,true);}ancestor=ancestor.parentElement; }
+  highlightedSession=id;highlightedProject=null;
+  for(const card of work.querySelectorAll('.project-card'))card.classList.remove('project-highlight');
+  for(const record of work.querySelectorAll('[data-session-id]'))record.classList.remove('record-highlight');
+  for(const control of work.querySelectorAll('.jump'))control.removeAttribute('aria-current');
+  target.classList.add('record-highlight');button.setAttribute('aria-current','location');
+  target.focus({preventScroll:true});target.scrollIntoView({behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
+  notice('Highlighted '+fullTitle(allSessions.find(session=>session.id===id)||{})+'.');
+}
+function jumpToProject(id,button) {
+  const card=[...work.querySelectorAll('.project-card')].find(node=>node.dataset.detailKey==='project:'+id);
+  if(!card)return;
+  card.open=true;folds.set(card.dataset.detailKey,true);highlightedProject=id;highlightedSession=null;
+  for(const record of work.querySelectorAll('[data-session-id]'))record.classList.remove('record-highlight');
+  for(const candidate of work.querySelectorAll('.project-card'))candidate.classList.remove('project-highlight');
+  for(const control of work.querySelectorAll('.jump'))control.removeAttribute('aria-current');
+  card.classList.add('project-highlight');button.setAttribute('aria-current','location');
+  const heading=card.querySelector('summary');heading.focus({preventScroll:true});heading.scrollIntoView({behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
+}
+function matchingProjectAlerts(selection,query) {
+  const byProject=new Map(selection.projects.map(project=>[project.id,project]));
+  return selection.alerts.filter(session=>matches(session,query)||projectMatches(byProject.get(selection.assignments.get(session.id))||{notes:[]},query));
+}
+// needChats: project id to the chat whose card shows that project's need; its jump goes to that card.
+function projectAlerts(selection,query,needChats=new Map()) {
+  const nav=element('nav','project-alerts');nav.setAttribute('aria-label','Project needs and live chat activity');nav.dataset.recordKey='activity-strip';
+  const byProject=new Map(selection.projects.map(project=>[project.id,project]));
+  const shownNeeds=selection.projects.map(project=>({project,...projectNeed(project,selection,query)})).filter(need=>need.shown);
+  // A project sits in one group only: once it needs you, its working chats leave Working.
+  const needing=new Set(shownNeeds.map(need=>need.project.id));
+  for(const [state,label,kind] of [['decision','Needs me','needs'],['working','Working','working']]) {
+    const needs=state==='decision'?shownNeeds:[];
+    const alerts=matchingProjectAlerts(selection,query).filter(session=>(session.state===state || state==='working'&&session.state==='finished')&&(state==='decision'?!selection.assignments.has(session.id):!needing.has(selection.assignments.get(session.id))));
+    const group=element('div','alert-group'),status=element('span','activity-label '+kind),dot=element('span','activity-dot'+(needs.length||alerts.some(session=>session.state===state)?' '+(state==='decision'?'needs-pulse':'working-dot'):''));
+    dot.setAttribute('aria-hidden','true');status.append(dot,element('span','',label));group.append(status,soundSwitch(state==='decision'?'needs':'finished'));
+    for(const need of needs) {
+      const button=element('button','jump',need.project.title);button.type='button';button.dataset.jumpNeed=need.project.id;
+      const chatId=needChats.get(need.project.id);
+      const target=(chatId&&allSessions.find(session=>session.id===chatId))||need.requests.find(session=>session.id===need.project.attention?.sessionId)||need.requests[0];
+      button.setAttribute('aria-label','Needs me: '+need.project.title+(target?' · '+fullTitle(target):''));
+      if(target){button.dataset.jumpId=target.id;button.addEventListener('click',()=>jumpToSession(target.id,button));}
+      else{button.dataset.jumpProject=need.project.id;button.addEventListener('click',()=>jumpToProject(need.project.id,button));}
+      if(highlightedProject===need.project.id||target&&highlightedSession===target.id)button.setAttribute('aria-current','location');
+      group.append(button);
+    }
+    for(const session of alerts) {
+      const project=byProject.get(selection.assignments.get(session.id));
+      const sameProject=project&&alerts.filter(candidate=>selection.assignments.get(candidate.id)===project.id).length>1;
+      const ended=session.state==='finished';
+      const button=element('button',ended?'jump just-finished':'jump',project?project.title+(sameProject?' · '+fullTitle(session):''):fullTitle(session));button.type='button';button.dataset.jumpId=session.id;button.title=(ended?'Finished just now · ':'')+appName(session)+' · '+fullTitle(session);
+      button.setAttribute('aria-label',(ended?'Finished just now':label)+': '+(project?project.title+' · ':'')+fullTitle(session));
+      if(highlightedSession===session.id)button.setAttribute('aria-current','location');
+      button.addEventListener('click',()=>jumpToSession(session.id,button));group.append(button);
+    }
+    const movedUp=state==='working'&&matchingProjectAlerts(selection,query).some(session=>session.state==='working'&&needing.has(selection.assignments.get(session.id)));
+    if(!alerts.length&&!needs.length)group.append(element('span','alert-empty',query?'No matches':state==='decision'?'Nothing waiting on you':movedUp?'No other chats working':'No chats working'));
+    nav.append(group);
+  }
+  return nav;
+}
+function projectActions(project,need) {
+  const actions=element('div','project-actions');
+  for(const [state,label] of (need.state==='waiting'?[['later','Later'],['resolved','Resolved']]:need.state==='later'?[['waiting','Needs me'],['resolved','Resolved']]:[['waiting','Needs me']])) {
+    const button=element('button','',label);button.type='button';button.dataset.action='project-'+state;
+    button.setAttribute('aria-label',(state==='resolved'?'Mark resolved':state==='later'?'Keep for later':'Mark as needing me')+': '+project.title);
+    button.disabled=!online||peerView.remote||pending.has('project:'+project.id);button.addEventListener('click',()=>actProject(project,state));actions.append(button);
+  }
+  return actions;
+}
+// A project need shown inside the chat that raised it. A question the card already shows is not repeated.
+// The chat's own controls answer its request, so this block adds only what the chat does not already say.
+function chatNeed(need,reason,question) {
+  const showReason=reason && !(question && (question.includes(reason) || reason.includes(question)));
+  if(need.state!=='later'&&!showReason&&question)return null;
+  const block=element('div','chat-need'+(need.state==='waiting'?' waiting':''));
+  if(need.state==='later')block.append(element('p','project-need-label','For later'));
+  else if(!showReason)block.append(element('p','project-need-label','Needs me'));
+  if(showReason)block.append(element('p','project-need-reason',reason));
+  return block;
+}
+function projectCard(project,selection,query,needChats) {
+  const ownRoots=selection.roots.filter(session=>selection.assignments.get(session.id)===project.id);
+  const textMatch=projectMatches(project,query);
+  if(query&&!textMatch&&!ownRoots.some(session=>branchMatches(session,query,selection.parents)))return null;
+  const card=boardFold('project-card','project:'+project.id,project.title,true,!!query);
+  if(highlightedProject===project.id)card.classList.add('project-highlight');
+  const heading=card.querySelector('summary'),meta=element('span','project-meta');
+  const need=projectNeed(project,selection,query);
+  if(need.shown) {
+    const attention=element('span','project-attention activity-label needs'),dot=element('span','activity-dot needs-pulse');dot.setAttribute('aria-hidden','true');attention.append(dot,element('span','','Needs me'));meta.append(attention);
+  }
+  const saved=stagePill(project.stage);saved.textContent='Saved: '+saved.textContent;meta.append(saved);
+  heading.append(meta,element('span','project-source-date','Source '+sourceDate(selection.source?.updatedAt,true)));
+  const body=element('div','project-body');
+  const reason=project.attention?.reason || (need.state==='waiting'&&project.attention?.origin!=='request'?project.next:'');
+  // An open request a chat raised sits in that chat's own card and clears when the chat stops asking.
+  const askId=(need.state==='waiting'||need.state==='later')&&project.attention?.origin==='request'&&project.attention.sessionId;
+  const ask=askId?{sessionId:askId,waiting:need.state==='waiting',rendered:false,render:question=>chatNeed(need,reason,question)}:null;
+  const live=element('div','live-chats');live.append(element('p','description','Chat activity'));
+  const shown=ownRoots.filter(session=>textMatch||branchMatches(session,query,selection.parents));
+  for(const session of shown)live.append(row(session,'project:'+project.id,selection.parents,[],true,false,ask));
+  if(!shown.length)live.append(element('p','empty',query?'No matching chats.':'No current chat linked to this project.'));
+  if(ask?.rendered)needChats?.set(project.id,askId);
+  else {
+    const attention=element('div','project-need'+(need.state==='waiting'?' waiting':''));
+    const caption=need.state==='waiting'?'Needs me':need.state==='later'?'For later':project.attention?.origin==='manual'?'Resolved here':'';
+    if(caption)attention.append(element('p','project-need-label',caption));
+    if(reason&&need.state!=='resolved')attention.append(element('p','project-need-reason',reason));
+    if(caption&&need.state!=='resolved')attention.append(needSource(project,selection));
+    attention.append(projectActions(project,need));body.append(attention);
+  }
+  if(project.freshness)body.append(element('p','project-freshness',String(project.freshness)));
+  if(project.description)body.append(element('p','project-description',String(project.description)));
+  body.append(live);
+  const groups=new Map();
+  for(const note of project.notes) { const status=Object.hasOwn(projectStages,note.status)?note.status:'park';if(!groups.has(status))groups.set(status,[]);groups.get(status).push(note); }
+  for(const [status,notes] of groups) {
+    const group=boardFold('note-group stage-'+status,'notes:'+project.id+':'+status,'Saved: '+projectStages[status],true,!!query);
+    const list=element('ul','project-notes');for(const note of notes)list.append(element('li','',String(note.text||'')));group.append(list);body.append(group);
+  }
+  if(project.next && (need.state==='resolved'||project.next!==reason)) { const next=element('p','project-next');next.append(element('strong','','Next: '),element('span','',String(project.next)));body.append(next); }
+  card.append(body);return card;
+}
+function boardLater(sessions,parents,query) {
+  const shown=sessions.filter(session=>branchMatches(session,query,parents));if(!shown.length)return null;
+  const shelf=boardFold('board-shelf','board-later','For later',false,!!query),records=element('div','records');
+  shelf.append(element('p','description','Kept for later, with current chat activity. New questions still appear above.'));
+  for(const session of shown)records.append(row(session,'later',parents));shelf.append(records);return shelf;
+}
+function renderProjectBoard(sessions,selection,query) {
+  const board=selectProjectBoard(projectBoard,sessions,now,justFinishedIds()),contents=[];
+  const source=element('p','source-note'),info=projectBoard.source||{};
+  if(info.importedAt)source.append(element('span','','Project notes copied '+sourceDate(info.importedAt)+'. '));
+  if(info.url){const link=element('a','',info.title||'Source');link.href=info.url;link.target='_blank';link.rel='noopener noreferrer';source.append(link,element('span','',' · '));}
+  source.append(element('span','',(info.url||info.importedAt?'Source updated ':'Project notes updated ')+sourceDate(info.updatedAt,true)+'. '+(online?'Chat activity live.':'Chat activity shows the last received updates.')));
+  // Cards first, so the strip knows which needs now sit inside a chat card.
+  const needChats=new Map(),grid=element('div','project-grid'),columns=Array.from({length:projectColumnCount},()=>element('div','project-column'));let shown=0;
+  for(const project of board.projects){const card=projectCard(project,board,query,needChats);if(card)columns[shown++%projectColumnCount].append(card);}
+  if(shown)grid.append(...columns);else grid.append(element('p','empty','No matching projects.'));
+  contents.push(source,projectAlerts(board,query,needChats));
+  const legend=element('div','project-legend');legend.setAttribute('aria-label','Project note stages, separate from chat activity');for(const stage of Object.keys(projectStages))legend.append(stagePill(stage));contents.push(legend,grid);
+  const other=board.roots.filter(session=>!board.assignments.has(session.id));
+  if(other.some(session=>branchMatches(session,query,board.parents))) {
+    const section=boardFold('other-work','other-work','Other work',false,!!query);section.append(element('p','description','Current chats without an explicit project link.'));
+    const records=element('div','records');for(const session of other.filter(session=>branchMatches(session,query,board.parents)))records.append(row(session,'other',board.parents,[],true,true));section.append(records);contents.push(section);
+  }
+  const earlier=earlierRequests(selection.earlier,selection.parents,query);if(earlier)contents.push(earlier);
+  const later=boardLater(selection.later,selection.parents,query);if(later)contents.push(later);
+  return contents;
+}
+function renderWork(force=false) {
+  if(!hasData)return;
+  const query=search.value.trim().toLocaleLowerCase();
+  const signature=JSON.stringify([allSessions,projectBoard,projectBoardStatus,view,query,online,[...pending],Math.floor(now/60000),peerView,[...justFinishedIds()]]);
+  if(!force && signature===fingerprint)return;
+  const restore=snapshotUI(), sessions=stableOrder(allSessions,positions), selection=selectDesk(sessions,now);
+  const contents=[];
+  if(view==='all') {
+    contents.push(element('p','description','Conversations tracked on this Mac, with anything kept for later at the bottom. This is not your apps’ complete history.'));
+    contents.push(section('All tracked sessions','','all',allViewOrder(sessions),'No tracked conversations yet. Open or resume a conversation in Claude or Codex.',selection.parents,query));
+  } else if(projectBoard)contents.push(...renderProjectBoard(sessions,selection,query));
+  else {
+    if(projectBoardStatus==='unavailable')contents.push(element('p','warning','Project notes could not be loaded. Your live chats are still shown below.'));
+    contents.push(section('Needs you','','attention',selection.attention,'No requests for a decision right now.',selection.parents,query));
+    contents.push(section('In front of you','','current',selection.current,'Your recent work appears here automatically. Older tracked work is in All sessions.',selection.parents,query));
+    const earlier=earlierRequests(selection.earlier,selection.parents,query);if(earlier)contents.push(earlier);
+    contents.push(section('For later','Still on your desk','later',selection.later,'Use “Keep for later” on any work above. It stays here with its status and context.',selection.parents,query));
+  }
+  work.replaceChildren(...contents);fingerprint=signature;restore();
+}
+function setView(next) { view=next;document.getElementById('desk-view').setAttribute('aria-pressed',String(view==='desk'));document.getElementById('all-view').setAttribute('aria-pressed',String(view==='all'));document.getElementById('page-title').textContent=view==='desk'&&projectBoard?'Your work, by project.':view==='desk'?'On your desk':'All sessions';document.title='Tower · '+(view==='desk'?'On your desk':'All sessions');renderWork(true); }
+function renderPinStatus(statuses) {
+  const warnings=[];
+  for(const [agent,name] of [['claude','Claude'],['codex','Codex']]) { const status=statuses?.[agent];if(status?.incomplete)warnings.push('Some '+name+' pins are unavailable.');if(status?.available===false)warnings.push(name+' pins could not refresh'+(status.status==='stale'?'; showing last known pins.':'.')); }
+  const target=document.getElementById('pin-status');target.textContent=warnings.join(' ');target.hidden=!warnings.length;
+}
+function renderPeerStatus(peers) {
+  const lines=peerStatusLines(peers), target=document.getElementById('peer-status');
+  target.textContent=lines.join(' · ');target.hidden=!lines.length;
+}
+function resort() { positions.clear();lastSorted=Date.now();fingerprint=''; }
+async function panelInUse() {
+  if(document.hasFocus())return true;
+  if(!window.towerLayout?.pointerInside)return document.documentElement.matches(':hover');
+  try { return await window.towerLayout.pointerInside(); } catch (_) { return true; }
+}
+async function resortIfIdle() {
+  if(resortOnNextData) { resortOnNextData=false;resort();return; }
+  if(shouldResort(false,lastSorted,Date.now()) && !(await panelInUse()))resort();
+}
+async function refresh(fresh=false) {
+  if(refreshing) { await refreshing;if(fresh)return refresh();return; }
+  refreshing=(async()=>{
+    try { const data=await request('/api/sessions');if(!Array.isArray(data.sessions))throw new Error('Missing sessions');allSessions=data.sessions.map(row => parking.has(row.id) ? {...row,parked:parking.get(row.id)} : row);hasData=true;online=true;now=Number(data.now)||Date.now();lastContact=Date.now();noteSoundCues(allSessions,now);peerView={configured:Array.isArray(data.peers) && data.peers.length>0,remote:data.viewer==='remote' || !isLoopbackHost(location.hostname),machine:typeof data.machine==='string'?data.machine:''};projectBoard=!peerView.remote&&Array.isArray(data.projectBoard?.projects)?data.projectBoard:null;projectBoardStatus=!peerView.remote&&data.projectBoardStatus==='unavailable'?'unavailable':'';document.getElementById('page-title').textContent=view==='desk'&&projectBoard?'Your work, by project.':view==='desk'?'On your desk':'All sessions';renderPinStatus(data.nativePinStatus);renderPeerStatus(data.peers);statusLine.textContent='Connected · Updated '+dateLabel(lastContact);statusLine.classList.remove('offline-label');retry.hidden=true;await resortIfIdle();renderWork(); }
+    catch(_) { online=false;statusLine.textContent=hasData?'Disconnected · Showing last received updates':'Cannot connect to Tower';statusLine.classList.add('offline-label');retry.hidden=false;if(hasData)renderWork(true);else work.replaceChildren(element('p','empty','Tower is unavailable. Retry the connection, or open the Tower launcher.')); }
+  })();
+  await refreshing;refreshing=null;
+}
+search.addEventListener('input',()=>renderWork(true));
+document.getElementById('desk-view').addEventListener('click',()=>setView('desk'));
+document.getElementById('all-view').addEventListener('click',()=>setView('all'));
+retry.addEventListener('click',()=>refresh());
+window.addEventListener('resize',()=>{
+  const count=projectColumnsForWidth(window.innerWidth);if(count===projectColumnCount)return;
+  projectColumnCount=count;if(view==='desk'&&projectBoard)renderWork(true);
+},{passive:true});
+const backToTop=document.getElementById('back-to-top');
+function updateBackToTop(){backToTop.hidden=window.scrollY<320;}
+document.addEventListener('scroll',updateBackToTop,{passive:true});
+backToTop.addEventListener('click',()=>{
+  document.getElementById('page-title').focus({preventScroll:true});
+  window.scrollTo({top:0,behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+});
+updateBackToTop();
+// Coming back to the page re-sorts from fresh data, not what was cached while away.
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){resortOnNextData=true;refresh(true);}});
+document.addEventListener('keydown',event=>{if(event.key==='Escape' && document.activeElement===search && search.value){search.value='';renderWork(true);}});
+refresh();setInterval(refresh,3000);
+</script>
+</body>
+</html>

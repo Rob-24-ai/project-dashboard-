@@ -1,0 +1,36 @@
+# Keep the repository source-only. Runtime state stays on each computer.
+/*
+!/.gitignore
+!/README.md
+!/server.js
+!/server.test.js
+!/page.html
+!/page.test.js
+!/project-board.js
+!/project-board.test.js
+!/peers.test.js
+!/peers.example.json
+!/project-board.example.json
+!/package.json
+!/Start Tower.command
+!/scripts/
+/scripts/*
+!/scripts/start.js
+!/scripts/start.test.js
+!/scripts/list-sessions.js
+!/scripts/list-sessions.test.js
+!/scripts/install-launch-agent.js
+!/scripts/install-launch-agent.test.js
+!/scripts/tower.plist.template
+!/window/
+/window/*
+!/window/main.js
+!/window/main.test.js
+!/window/preload.js
+!/window/content-preload.js
+!/window/shell.html
+!/window/loader.html
+!/window/package.json
+!/window/package-lock.json
+!/window/trayTemplate.png
+!/window/trayTemplate@2x.png

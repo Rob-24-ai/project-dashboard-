@@ -1,0 +1,9 @@
+{
+  "label": "MacBook",
+  "tailnetHost": "macbook.tail1234.ts.net",
+  "allowedLogin": "your-login@github",
+  "remotePort": 4434,
+  "peers": [
+    { "label": "Mac mini", "url": "https://mac-mini.tail1234.ts.net" }
+  ]
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline';" />
+<style>
+  :root { color-scheme: dark; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: #13151b; color: #f5f8ff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    overflow: hidden; user-select: none;
+  }
+  /* The whole strip is the drag region. */
+  .strip {
+    height: 24px;
+    display: flex; align-items: center;
+    background: #13151b;
+    -webkit-app-region: drag;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+  /* No title text: the traffic lights own the top-left. This inert spacer
+     just holds the drag region and pushes the pin/close buttons to the right. */
+  .spacer { flex: 1; }
+  .btn {
+    -webkit-app-region: no-drag;
+    width: 22px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; cursor: pointer;
+    font-size: 13px; line-height: 1;
+    margin-left: 4px;
+    border: 1px solid transparent;
+    background: transparent; color: #b7bdc9;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .btn:focus-visible { outline: 2px solid #ffffff; outline-offset: 1px; }
+  .btn:hover { background: #2d3340; color: #f5f8ff; }
+  /* Pin colour encodes state: white = pinned, muted = unpinned.
+     No filled chip — the icon sits bare, matching the close button. */
+  .pin svg { width: 14px; height: 14px; display: block; }
+  .pin.on { color: #ffffff; }
+  .pin.on:hover { color: #ffffff; }
+  .close:hover { background: #da3633; color: #ffffff; border-color: #da3633; }
+</style>
+</head>
+<body>
+  <div class="strip">
+    <div class="spacer"></div>
+    <button type="button" id="pin" class="btn pin" aria-label="Always on top" title="Always on top"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/></svg></button>
+    <button type="button" id="close" class="btn close" aria-label="Close Tower" title="Close Tower">&#10005;</button>
+  </div>
+  <script>
+    const pinBtn = document.getElementById('pin');
+    const closeBtn = document.getElementById('close');
+
+    function render(on) {
+      pinBtn.classList.toggle('on', !!on);
+      pinBtn.setAttribute('aria-pressed', String(!!on));
+      pinBtn.title = on ? 'Always on top: ON (click to unpin)' : 'Always on top: OFF (click to pin)';
+    }
+
+    window.tower.getPin().then(render);
+
+    pinBtn.addEventListener('click', async () => {
+      const on = await window.tower.togglePin();
+      render(on);
+    });
+
+    closeBtn.addEventListener('click', () => window.tower.close());
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "source": {
+    "updatedAt": "Oct 30, 2026"
+  },
+  "projects": [
+    {
+      "id": "website",
+      "title": "Website redesign",
+      "stage": "prog",
+      "freshness": "Checked Oct 30",
+      "description": "New landing page and pricing page.",
+      "notes": [
+        { "status": "built", "text": "Landing page drafted on a branch." },
+        { "status": "wait", "text": "Pricing copy needs my review." }
+      ],
+      "next": "Review the pricing copy, then ship the landing page.",
+      "sessionIds": []
+    },
+    {
+      "id": "invoices",
+      "title": "Invoice automation",
+      "stage": "wait",
+      "freshness": "Checked Oct 29",
+      "description": "Script that turns time logs into monthly invoices.",
+      "notes": [
+        { "status": "stuck", "text": "Bank export format changed." }
+      ],
+      "next": "Decide whether to switch to the CSV export.",
+      "sessionIds": []
+    }
+  ]
+}

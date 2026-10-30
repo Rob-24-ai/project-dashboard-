@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.tower.dashboard</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>{{NODE}}</string>
+    <string>{{ROOT}}/server.js</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>LimitLoadToSessionType</key>
+  <string>Aqua</string>
+  <key>StandardOutPath</key>
+  <string>{{ROOT}}/tower.log</string>
+  <key>StandardErrorPath</key>
+  <string>{{ROOT}}/tower.log</string>
+  <key>WorkingDirectory</key>
+  <string>{{ROOT}}</string>
+</dict>
+</plist>
