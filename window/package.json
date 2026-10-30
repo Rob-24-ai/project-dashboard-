@@ -8,7 +8,7 @@
     "start": "electron ."
   },
   "author": "Rob Colvin",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "electron": "^43.3.0"

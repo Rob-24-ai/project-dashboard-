@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Floating macOS dashboard for your Claude and Codex sessions, grouped by project",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "engines": {
     "node": ">=22.12.0"
   },

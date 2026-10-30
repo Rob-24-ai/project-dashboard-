@@ -265,3 +265,7 @@ allowlist, so add any new source file to it.
 
 For tests, `TOWER_HOME`, `TOWER_DATA_DIR` and `TOWER_PORT` isolate inputs, state
 and port. The launcher refuses to run with them set.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
